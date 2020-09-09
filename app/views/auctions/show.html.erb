@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+<div class="container">
+<p>
+  <strong>Title:</strong>
+  <%= @auction.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @auction.description %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  $ <%= @auction.price %>
+</p>
+<% if can? :crud, @auction %>
+        <button class="edit"><%= link_to "Edit", edit_auction_path(@auction) %></button>
+        <button class="delete"><%= link_to "Delete", auction_path(@auction),
+           method: :delete, data: {confirm: "Are You sure?"} %></button>
+ |
+ <% end %>
+<%= link_to 'Back', auctions_path %>
+
+</div>
+
+
+<div class="container">
+  <%= form_with(model: [@auction, @bid], local: true) do |f| %>
+
+  <% if @bid.errors.any? %>
+
+  <ul>
+    <% @bid.errors.full_messages.each do |msg| %>
+    <li class="color_text"><%= msg %></li>
+    <% end %>
+  </ul>
+  <% end %>
+
+     <div>
+
+       <%= f.text_area(
+       :price,
+       cols: 20,
+       rows: 2,
+       placeholder: "476"
+       ) %>
+
+    </div>
+
+   <div><%= f.submit "bid" %></div>
+
+  <% end %>
+</div>
+
+
+<% @bids.each do |bid| %>
+ <div class = "container">
+    <ul>
+      <li>
+         <p>
+            $ <%= bid.price%>
+            <span> | <%= time_ago_in_words(bid.created_at) %></<span>
+         </p>
+         <p>
+          <small>
+            <%if can? :crud, bid %>
+              <button class="delete_one"><%= link_to "Delete", auction_bid_path(@auction, bid),
+                  method: :delete, data: {confirm: "Are You sure?"} %></button>
+            <% end %>
+          </small>
+          <small>
+               By <strong><%= bid.user.full_name %></strong>
+          </small>
+        </p>
+      </li>
+    </ul>
+ </div>
+<% end %>

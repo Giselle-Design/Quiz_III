@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AUCTION</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <ul class= "navbar">
+      <li class = "active"><%= link_to "Home", root_path %></li>
+      <li class = "active"><%= link_to "Auction", auctions_path %></li>
+      <li class = "active_one color_one">
+        <% if user_signed_in? %>
+             <a>Hello <%= current_user.full_name %></a>
+      </li>
+           <li class="active_one">
+             <%= link_to "Sign Out", session_path, method: :delete%>
+           </li>
+
+        <% else %>
+           <li class="active_one">
+                 <%= link_to "Sign In", new_session_path %>
+           </li>
+        <% end %>
+
+      <li class = "active_one"><%= link_to "Sing Up", new_user_path %></li>
+      <li class = "active_one"><%= link_to "Create Auction", new_auction_path %></li>
+      <li class="active_one">
+        <%= link_to "API", api_v1_auctions_path %>
+      </li>
+    </ul>
+    <%= yield %>
+  </body>
+</html>

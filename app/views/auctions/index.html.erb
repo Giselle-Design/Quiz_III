@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<h1 class = "topic">Auctions</h1>
+
+<% @auctions.each do |auction| %>
+<div class="container column">
+  <h2><%= link_to auction.title, auction_path(auction) %></h2>
+  <h3><%= auction.description %></h3>
+  <small>By <strong><%= auction.user.full_name %></strong></small>
+</div>
+<% end %>
